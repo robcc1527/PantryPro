@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+//Button
+import Button from './Components/Buttons/Button';
 
 interface Forecast {
     date: string;
@@ -46,6 +48,7 @@ function App() {
             <div>
                 My name is Chezy. Hello World!
             </div>
+            <Button/>
         </div>
     );
 
