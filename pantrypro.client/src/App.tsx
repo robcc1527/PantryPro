@@ -43,6 +43,9 @@ function App() {
             <h1 id="tabelLabel">Weather forecast</h1>
             <p>This component demonstrates fetching data from the server.</p>
             {contents}
+            <div>
+                My name is Chezy. Hello World!
+            </div>
         </div>
     );
 
