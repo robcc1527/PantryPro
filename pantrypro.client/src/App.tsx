@@ -45,7 +45,7 @@ function App() {
             {contents}
             <div>
                 My name is Chezy. Hello World!
-                My name is Izzy. Hello World!
+                My name is Izzy. Hello World!!! 
             </div>
         </div>
     );
