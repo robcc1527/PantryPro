@@ -8,7 +8,7 @@ namespace PantryPro.Server.Controllers
     {
         private static readonly string[] Descriptions = new[]
         {
-            "Int", "String", "Array", "Boolean", "Long int", "Char", "Float", "Enum"
+            "Fruit", "Vegetable(s)", "Meat", "Whole grains", "Beverage", "Alcohol", "Nuts", "Oils", "Legumes"
         };
 
         private readonly ILogger<GroceryItemController> _logger;
