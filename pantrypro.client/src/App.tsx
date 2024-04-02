@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import Pantry from './Pages/Pantry';
 import './App.css';
 //Button
 import Button from './Components/Buttons/Button';
@@ -45,7 +46,7 @@ function App() {
         <Router>
             <Routes>
                 {/* <Route path='/' element={<Dashboard />}/> */}
-                {/* <Route path='/pantry' element={<Pantry />}/> */}
+                <Route path='/pantry' element={<Pantry />}/>
             </Routes>
             <div>
                 <h1 id="tabelLabel">Weather forecast</h1>
@@ -58,8 +59,8 @@ function App() {
                     Test
                 </div>
             </div>
+            <Link to={'/pantry'}>Pantry</Link>
             <Button/>
-        </div>
         </Router>
     );
 
