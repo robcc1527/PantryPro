@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
+//Button
+import Button from './Components/Buttons/Button';
 
 interface Forecast {
     date: string;
@@ -56,6 +58,8 @@ function App() {
                     Test
                 </div>
             </div>
+            <Button/>
+        </div>
         </Router>
     );
 
