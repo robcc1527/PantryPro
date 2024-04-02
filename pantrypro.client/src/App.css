@@ -17,4 +17,32 @@ th, td {
     padding-left: 1rem;
     padding-right: 1rem;
 }
-.card {}
+.item-list-container {
+    display: flex;
+    gap: 25px;
+}
+
+.item-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 200px;
+    height: auto;
+
+    padding: 10px;
+    border-radius: 20px;
+    background-color: gray;
+}
+
+.item-container>img {
+    margin: 0 auto;
+    width: 190px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8%;
+}
+
+.item-details {
+    display: flex;
+    flex-direction: column;
+}

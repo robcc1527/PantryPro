@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Pantry from './Pages/Pantry';
+import Dashboard from './Pages/Dashboard';
 import './App.css';
 //Button
 import Button from './Components/Buttons/Button';
@@ -45,7 +46,7 @@ function App() {
     return (
         <Router>
             <Routes>
-                {/* <Route path='/' element={<Dashboard />}/> */}
+                <Route path='/dashboard' element={<Dashboard />}/>
                 <Route path='/pantry' element={<Pantry />}/>
             </Routes>
             <div>
@@ -59,6 +60,8 @@ function App() {
                     Test
                 </div>
             </div>
+            <Link to={'/dashboard'}>Dashboard</Link>
+            <br />
             <Link to={'/pantry'}>Pantry</Link>
             <Button/>
         </Router>
