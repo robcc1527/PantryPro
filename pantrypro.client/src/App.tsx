@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 //Button
 import Button from './Components/Buttons/Button';
@@ -41,15 +42,25 @@ function App() {
         </table>;
 
     return (
-        <div>
-            <h1 id="tabelLabel">Weather forecast</h1>
-            <p>This component demonstrates fetching data from the server.</p>
-            {contents}
+        <Router>
+            <Routes>
+                {/* <Route path='/' element={<Dashboard />}/> */}
+                {/* <Route path='/pantry' element={<Pantry />}/> */}
+            </Routes>
             <div>
-                My name is Chezy. Hello World!
+                <h1 id="tabelLabel">Weather forecast</h1>
+                <p>This component demonstrates fetching data from the server.</p>
+                {contents}
+                <div>
+                    My name is Chezy. Hello World!
+                    My name is Izzy. Hello World!!! 
+                    My name is Esteban. Hello World!
+                    Test
+                </div>
             </div>
             <Button/>
         </div>
+        </Router>
     );
 
     async function populateWeatherData() {
