@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 //Button
 import Button from './Components/Buttons/Button';
+import Footer from './Components/Footer/Footer';
 
 interface Forecast {
     date: string;
@@ -58,8 +59,9 @@ function App() {
                     Test
                 </div>
             </div>
-            <Button/>
-        </div>
+           <Button text="Click Me" onClick={() => { /* Define your onClick handler here */ }}/>
+
+          <Footer /> {/* Include the Footer component here */} 
         </Router>
     );
 
