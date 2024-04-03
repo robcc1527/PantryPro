@@ -17,3 +17,63 @@ th, td {
     padding-left: 1rem;
     padding-right: 1rem;
 }
+
+/* Footer.css */
+
+
+footer {
+
+    background-color: white;
+    display: flex;
+    /* Use flexbox to align items horizontally */
+    justify-content: center;
+    /* Center items horizontally */
+    align-items: center;
+    /* Align items vertically */
+}
+
+footer p {
+    color: black;
+    margin: 0;
+    /* Reset margin to remove default spacing */
+    padding: 0;
+    /* Reset padding to remove default spacing */
+}
+
+.spacer {
+    margin: 0 40px;
+    /* Adjust this value as needed */
+}
+
+/*Socail Icons */
+.social-icons {
+    display: flex;
+    /* Use flexbox to align social icons horizontally */
+}
+
+.social-icon {
+    margin-right: 10px;
+    /* Adjust spacing between icons */
+    color: black;
+    /* Set icon color */
+}
+
+.social-icon:hover {
+    color: green;
+    /* Change color on hover */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    footer {
+        flex-direction: column;
+        /* Stack elements vertically on smaller screens */
+        text-align: center;
+        /* Center align text */
+    }
+
+    .social-icons {
+        margin-top: 10px;
+        /* Add spacing between social icons and other content */
+    }
+}

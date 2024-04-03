@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 //Button
 import Button from "./Components/Buttons/Button";
+import Footer from "./Components/Footer/Footer";
 
 interface Forecast {
   date: string;
@@ -67,7 +68,13 @@ function App() {
           is Esteban. Hello World! Test
         </div>
       </div>
-      <Button />
+      <Button
+        text="Click Me"
+        onClick={() => {
+          /* Define your onClick handler here */
+        }}
+      />
+      <Footer /> {/* Include the Footer component here */}
     </Router>
   );
 
