@@ -4,13 +4,14 @@ import { useState } from "react"
 const Pantry = () => {
 
     const groceryItem = [
-        {id: 1, item: 'apple', description: 'fruit', img: "https://static.manitobacooperator.ca/wp-content/uploads/2018/11/apple_GettyImages186843005_cmyk.jpg"},
-        {id: 2, item: 'broccoli', description: 'vegetable', img:'https://cdn.pixabay.com/photo/2016/03/05/19/02/broccoli-1238250_1280.jpg'},
-        {id: 3, item: 'chicken', description: 'meats', img: 'https://primecuts.co.ke/cdn/shop/products/shutterstock_583587001_1200x.jpg?v=1592990144'}
+        {id: 1, item: 'apple', description: 'fruit', quantity: 0},
+        {id: 2, item: 'broccoli', description: 'vegetable', quantity: 0},
+        {id: 3, item: 'chicken', description: 'meats', quantity: 0}
     ]
 
     const [itemsOnHand, setItemsOnHand] = useState<Array<any>>([])
     const [selectedItem, setSelectedItem] = useState({})
+    // const [itemQuantity, setItemQuantity] = useState(0)
 
     
     const handleSelectItemOnChange = (e) => {
@@ -27,19 +28,36 @@ const Pantry = () => {
         console.log('ItemsOnHand:',itemsOnHand)
     }
 
-    
+    const incrementQuantity = (id, quantity) => {
+        setItemsOnHand(itemsOnHand.map(item => {
+            if(item.id == id) {
+                return {...item, quantity: item.quantity + 1}
+            } 
+            return item
+        }))
+    }
+
+    const decrementQuantity = (id, quantity) => {
+        setItemsOnHand(itemsOnHand.map(item => {
+            if(item.id == id && item.quantity > 0) {
+                return {...item, quantity: item.quantity - 1}
+            } 
+            return item
+        }))
+    }
 
     const displayItems = itemsOnHand.map(item => (
-            <div key={item.id} className="item-container">
-                <img src={item.img} alt={item.item} />
-                <div className="item-details">
-                    <span>Item: {item.item}</span>
-                    <span>Descripton: {item.description}</span> 
+            <div className="item-container">
+                <span>{item.item}</span>
+                <span>{item.description}</span>
+                <div className="modify-quantity-container">
+                    <button onClick={() => decrementQuantity(item.id, item.quantity)}>-</button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => incrementQuantity(item.id, item.quantity)}>+</button>
                 </div>
-                <div>
-                    <button>-</button>
-                    <span>0</span>
-                    <button>+</button>
+                <div className="edit-button-container">
+                    <button>edit</button>
+                    <button>Delete</button>
                 </div>
             </div>
     ))
@@ -47,18 +65,27 @@ const Pantry = () => {
     return (
         <div>
             <h1>Pantry</h1>
-            <select onChange={handleSelectItemOnChange}>
-                <option value=''>Select an option</option>
-                {groceryItem.map(item => (
-                    <option 
-                        key={item.id} 
-                        value={item.id}
-                    >{item.item}</option>
-                ))}
-            </select>
-            <button onClick={handleAddItem}>+</button>
+            <div className="filter-search-add-container">
+                <button>Filter</button>
+                <select onChange={handleSelectItemOnChange}>
+                    <option value=''>Select an option</option>
+                        {groceryItem.map(item => (
+                            <option 
+                                key={item.id} 
+                                value={item.id}
+                            >{item.item}</option>
+                        ))}
+                </select>
+                <button onClick={handleAddItem}>+</button>
+            </div>
+            
             <h2>List of Items</h2>
-            <div className="item-list-container">
+            <div className="title-list">
+                <h3>Item</h3>
+                <h3>Item Type</h3>
+                <h3>Quantity</h3>
+            </div>
+            <div>
                 {displayItems}
             </div>
         </div>
