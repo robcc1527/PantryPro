@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "./App.css";
+import { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import Pantry from './Pages/Pantry';
+import Dashboard from './Pages/Dashboard';
+import './App.css';
 //Button
 import Button from "./Components/Buttons/Button";
 import Footer from "./Components/Footer/Footer";
@@ -53,30 +55,36 @@ function App() {
       </table>
     );
 
-  return (
-    <Router>
-      <Routes>
-        {/* <Route path='/' element={<Dashboard />}/> */}
-        {/* <Route path='/pantry' element={<Pantry />}/> */}
-      </Routes>
-      <div>
-        <h1 id="tabelLabel">Weather forecast</h1>
-        <p>This component demonstrates fetching data from the server.</p>
-        {contents}
-        <div>
-          My name is Chezy. Hello World! My name is Izzy. Hello World!!! My name
-          is Esteban. Hello World! Test
-        </div>
-      </div>
-      <Button
-        text="Click Me"
-        onClick={() => {
-          /* Define your onClick handler here */
-        }}
-      />
-      <Footer /> {/* Include the Footer component here */}
-    </Router>
-  );
+    return (
+        <Router>
+            <Routes>
+                <Route path='/dashboard' element={<Dashboard />}/>
+                <Route path='/pantry' element={<Pantry />}/>
+            </Routes>
+            <div>
+                <h1 id="tabelLabel">Weather forecast</h1>
+                <p>This component demonstrates fetching data from the server.</p>
+                {contents}
+                <div>
+                    My name is Chezy. Hello World!
+                    My name is Izzy. Hello World!!! 
+                    My name is Esteban. Hello World!
+                    Test
+                </div>
+            </div>
+            <Link to={'/dashboard'}>Dashboard</Link>
+            <br />
+            <Link to={'/pantry'}>Pantry</Link>
+            <Button
+                text="Click Me"
+                onClick={() => {
+                /* Define your onClick handler here */
+                }}
+            />
+            <Footer /> {/* Include the Footer component here */}
+        </Router>
+    );
+  
 
   async function populateWeatherData() {
     const response = await fetch("weatherforecast");
