@@ -47,7 +47,7 @@ const Pantry = () => {
     }
 
     const displayItems = itemsOnHand.map(item => (
-            <div className="item-container">
+            <div key={item.id} className="item-container">
                 <span>{item.item}</span>
                 <span>{item.description}</span>
                 <div className="modify-quantity-container">
