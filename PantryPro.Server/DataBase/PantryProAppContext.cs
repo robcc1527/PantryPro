@@ -30,7 +30,7 @@ public class PantryProAppContext : DbContext
             entity.HasKey(e => e.Id).HasName("gtoceryItem_key");
         });
 
-        OnModelCreatingPartial(modelBuilder);
+        OnModelCreating(modelBuilder);
     }
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+   
 }
