@@ -29,10 +29,19 @@ namespace PantryPro.Server.Controllers
             })
             .ToArray();
         }
-        [HttpGet ("Getme")]
+        [HttpGet("Getme")]
         public string Getme()
         {
             return "Christon";
         }
+
+        [HttpGet("Getmetwo")]
+        public string Getmetwo()
+        {
+            return "Robert";
+        }
+
+
+
     }
 }
