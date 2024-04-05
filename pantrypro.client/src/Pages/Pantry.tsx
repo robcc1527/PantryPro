@@ -11,7 +11,6 @@ const Pantry = () => {
 
     const [itemsOnHand, setItemsOnHand] = useState<Array<any>>([])
     const [selectedItem, setSelectedItem] = useState({})
-    // const [itemQuantity, setItemQuantity] = useState(0)
 
     
     const handleSelectItemOnChange = (e) => {
@@ -63,11 +62,11 @@ const Pantry = () => {
     ))
 
     return (
-        <div>
+        <div className="pantry-container">
             <h1>Pantry</h1>
             <div className="filter-search-add-container">
                 <button>Filter</button>
-                <select onChange={handleSelectItemOnChange}>
+                <select className="item-dropdown-list" onChange={handleSelectItemOnChange}>
                     <option value=''>Select an option</option>
                         {groceryItem.map(item => (
                             <option 

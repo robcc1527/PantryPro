@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import SideBar from './Components/Sidebar';
 import Pantry from './Pages/Pantry';
 import Dashboard from './Pages/Dashboard';
 import './App.css';
-//Button
-import Button from "./Components/Buttons/Button";
 import Footer from "./Components/Footer/Footer";
 
 interface Forecast {
@@ -16,7 +15,7 @@ interface Forecast {
 
 function App() {
   const [forecasts, setForecasts] = useState<Forecast[]>();
-
+ 
   useEffect(() => {
     populateWeatherData();
   }, []);
@@ -57,10 +56,12 @@ function App() {
 
     return (
         <Router>
+            <SideBar />
             <Routes>
                 <Route path='/dashboard' element={<Dashboard />}/>
                 <Route path='/pantry' element={<Pantry />}/>
             </Routes>
+            
             <div>
                 <h1 id="tabelLabel">Weather forecast</h1>
                 <p>This component demonstrates fetching data from the server.</p>
@@ -75,12 +76,6 @@ function App() {
             <Link to={'/dashboard'}>Dashboard</Link>
             <br />
             <Link to={'/pantry'}>Pantry</Link>
-            <Button
-                text="Click Me"
-                onClick={() => {
-                /* Define your onClick handler here */
-                }}
-            />
             <Footer /> {/* Include the Footer component here */}
         </Router>
     );
