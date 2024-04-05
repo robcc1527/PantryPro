@@ -21,13 +21,17 @@ namespace PantryPro.Server.Controllers
         [HttpGet(Name = "GetGroceryItem")]
         public IEnumerable<GroceryItem> Get()
         {
+            var groceryItemType = new GroceryItemType();
+            groceryItemType.Description = "Fruit";
+
             return Enumerable.Range(1, 5).Select(index => new GroceryItem
             {
                 Description = Descriptions[Random.Shared.Next(Descriptions.Length)],
                 Protein = Random.Shared.Next(0, 300),
                 Carbs = Random.Shared.Next(0, 100),
                 Calories = Random.Shared.Next(0, 2000),
-                Fat = Random.Shared.Next(0, 100)
+                Fat = Random.Shared.Next(0, 100),
+                GroceryItemType = groceryItemType,
             })
             .ToArray();
         }

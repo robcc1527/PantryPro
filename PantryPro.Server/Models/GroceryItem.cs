@@ -9,7 +9,7 @@ namespace PantryPro.Server
         public int Protein { get; set; }
 
         public int GroceryItemTypeId { get; set; }
-        
+
         public int Carbs { get; set; }
 
         public int Calories { get; set; }
@@ -17,6 +17,6 @@ namespace PantryPro.Server
         public int Weight { get; set; }
 
         public int Fat { get; set; }
+        public GroceryItemType GroceryItemType { get; set; }
     }
 }
-  
