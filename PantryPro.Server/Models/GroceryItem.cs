@@ -1,9 +1,18 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace PantryPro.Server
 {
+    [Table("groceryItem")]
     public class GroceryItem
     {
+        [Key]
+        [Column("id")]
         public int Id { get; set; }
 
+        [Required]
+        [Column("Description")]
+        [StringLength(100)]
         public string Description { get; set; }
 
         public int Protein { get; set; }

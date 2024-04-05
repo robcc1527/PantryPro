@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
 namespace PantryPro.Server.DataBase;
@@ -26,11 +22,12 @@ public class PantryProAppContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<GroceryItem>(entity =>{
-            entity.HasKey(e => e.Id).HasName("gtoceryItem_key");
+        modelBuilder.Entity<GroceryItem>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("groceryItem_key");
         });
 
         OnModelCreating(modelBuilder);
     }
-   
+
 }
