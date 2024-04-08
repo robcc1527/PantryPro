@@ -5,6 +5,14 @@ import Pantry from './Pages/Pantry';
 import Dashboard from './Pages/Dashboard';
 import './App.css';
 import Footer from "./Components/Footer/Footer";
+import Header from "./Components/Header/Header"
+import './Components/Header/Header.css';
+
+
+
+
+
+
 
 interface Forecast {
   date: string;
@@ -53,9 +61,13 @@ function App() {
         </tbody>
       </table>
     );
+    
 
     return (
+
         <Router>
+        <Header title="" /> {/* Render the Header component */}
+        
             <SideBar />
             <Routes>
                 <Route path='/dashboard' element={<Dashboard />}/>
@@ -63,13 +75,15 @@ function App() {
             </Routes>
             
             <div>
+               
+                
                 <h1 id="tabelLabel">Weather forecast</h1>
                 <p>This component demonstrates fetching data from the server.</p>
                 {contents}
                 <div>
-                    My name is Chezy. Hello World!
-                    My name is Izzy. Hello World!!! 
-                    My name is Esteban. Hello World!
+                    My name is Chezy. Hello World! <br/> 
+                    My name is Izzy. Hello World!!! <br/>
+                    My name is Esteban. Hello World!<br/>
                     Test
                 </div>
             </div>
