@@ -14,54 +14,22 @@ import './Components/Header/Header.css';
 
 
 
-interface Forecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
+
 
 function App() {
-  const [forecasts, setForecasts] = useState<Forecast[]>();
- 
-  useEffect(() => {
-    populateWeatherData();
-  }, []);
 
-  const contents =
-    forecasts === undefined ? (
-      <p>
-        <em>
-          Loading... Please refresh once the ASP.NET backend has started. See{" "}
-          <a href="https://aka.ms/jspsintegrationreact">
-            https://aka.ms/jspsintegrationreact
-          </a>{" "}
-          for more details.
-        </em>
-      </p>
-    ) : (
-      <table className="table table-striped" aria-labelledby="tabelLabel">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Temp. (C)</th>
-            <th>Temp. (F)</th>
-            <th>Summary</th>
-          </tr>
-        </thead>
-        <tbody>
-          {forecasts.map((forecast) => (
-            <tr key={forecast.date}>
-              <td>{forecast.date}</td>
-              <td>{forecast.temperatureC}</td>
-              <td>{forecast.temperatureF}</td>
-              <td>{forecast.summary}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-    
+    const groceryItem = [
+        {id: 1, item: 'apple', description: 'fruit', quantity: 0, weight: '2oz', price: 0.58, img: 'https://thumbs.dreamstime.com/b/red-apple-isolated-clipping-path-19130134.jpg'},
+        {id: 2, item: 'broccoli', description: 'vegetable', quantity: 0, weight: '6oz', price: 3.50, img: 'https://cdn.pixabay.com/photo/2016/03/05/19/02/broccoli-1238250_1280.jpg'},
+        {id: 3, item: 'steak', description: 'meat', quantity: 0, weight: '1lb', price: 10.00, img: 'https://images.squarespace-cdn.com/content/v1/604fbd087a097d37ff497591/1627625364090-CXM4JV33S523ZG9DWDQQ/raw%2Btop%2Bsirloin.jpg'}
+    ]
+
+    const [pantryList, setPantryList] = useState<any[]>([])
+
+    const handlePantry = (pantryData: any[]) => {
+        setPantryList(pantryData)
+    }
+    console.log('app:', pantryList)
 
     return (
 
@@ -70,36 +38,13 @@ function App() {
         
             <SideBar />
             <Routes>
-                <Route path='/dashboard' element={<Dashboard />}/>
-                <Route path='/pantry' element={<Pantry />}/>
+                <Route path='/dashboard' element={<Dashboard pantryList={pantryList}/>}/>
+                <Route path='/pantry' element={<Pantry pantryData={handlePantry} groceryItem={groceryItem} />}/>
             </Routes>
-            
-            <div>
-               
-                
-                <h1 id="tabelLabel">Weather forecast</h1>
-                <p>This component demonstrates fetching data from the server.</p>
-                {contents}
-                <div>
-                    My name is Chezy. Hello World! <br/> 
-                    My name is Izzy. Hello World!!! <br/>
-                    My name is Esteban. Hello World!<br/>
-                    Test
-                </div>
-            </div>
-            <Link to={'/dashboard'}>Dashboard</Link>
-            <br />
-            <Link to={'/pantry'}>Pantry</Link>
             <Footer /> {/* Include the Footer component here */}
         </Router>
     );
   
-
-  async function populateWeatherData() {
-    const response = await fetch("weatherforecast");
-    const data = await response.json();
-    setForecasts(data);
-  }
 }
 
 export default App;
