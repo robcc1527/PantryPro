@@ -5,6 +5,15 @@ import Pantry from './Pages/Pantry';
 import Dashboard from './Pages/Dashboard';
 import './App.css';
 import Footer from "./Components/Footer/Footer";
+import Header from "./Components/Header/Header"
+import './Components/Header/Header.css';
+
+
+
+
+
+
+
 
 
 function App() {
@@ -23,7 +32,10 @@ function App() {
     console.log('app:', pantryList)
 
     return (
+
         <Router>
+        <Header title="" /> {/* Render the Header component */}
+        
             <SideBar />
             <Routes>
                 <Route path='/dashboard' element={<Dashboard pantryList={pantryList}/>}/>

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PantryPro.Server
 {
-    public class GroceryItem
+    public class GroceryItemPost
     {
         public int Id { get; set; }
 
@@ -21,6 +21,5 @@ namespace PantryPro.Server
         public int Weight { get; set; }
 
         public int Fat { get; set; }
-        public GroceryItemType GroceryItemType { get; set; } = default!;
     }
 }

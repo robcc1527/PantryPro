@@ -158,13 +158,25 @@ th, td {
 }
 
 
+
+
+
+/* App.css */
+.app {
+    font-family: Arial, sans-serif;
+}
+
+
+
+
+
 /* Footer.css */
 
 
 footer {
 
-    background-color: rgb(80, 165, 80);
-    color: #fff;
+    background-color:#ffffff;
+    color: black;
     display: flex;
     /* Use flexbox to align items horizontally */
     justify-content: center;
@@ -199,7 +211,7 @@ footer p {
 }
 
 .social-icon:hover {
-    color: green;
+    color: #f5a540;
     /* Change color on hover */
 }
 
@@ -217,3 +229,11 @@ footer p {
         /* Add spacing between social icons and other content */
     }
 }
+
+/* styles.css */
+html,
+body {
+    background-color: rgb(228, 228, 228);
+    /* Light grey background color */
+}
+

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using PantryPro.Server.DataBase;
 
 namespace PantryPro.Server.Controllers
 {
@@ -12,20 +13,32 @@ namespace PantryPro.Server.Controllers
         };
 
         private readonly ILogger<GroceryItemTypeController> _logger;
+        private readonly PantryProAppContext _dbContext;
 
-        public GroceryItemTypeController(ILogger<GroceryItemTypeController> logger)
+        public GroceryItemTypeController(
+            ILogger<GroceryItemTypeController> logger,
+            PantryProAppContext dbContext)
         {
+            _dbContext = dbContext;
             _logger = logger;
         }
 
         [HttpGet(Name = "GetGroceryItemType")]
-        public IEnumerable<GroceryItemType> Get()
+        public IEnumerable<GroceryItemType> GetGroceryItemTypeById()
         {
             return Enumerable.Range(1, 5).Select(index => new GroceryItemType
             {
                 Description = Descriptions[Random.Shared.Next(Descriptions.Length)],
             })
             .ToArray();
+        }
+
+        [HttpPost]
+        public ActionResult<GroceryItem> CreateGroceryItemType([FromBody] GroceryItemType groceryItemType)
+        {
+            _dbContext.GroceryItemType.Add(groceryItemType);
+            _dbContext.SaveChanges();
+            return CreatedAtAction(nameof(GetGroceryItemTypeById), new { id = groceryItemType.Id }, groceryItemType);
         }
     }
 }
