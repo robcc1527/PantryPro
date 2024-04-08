@@ -41,12 +41,13 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: rgb(80, 165, 80);
+  background-color: #f5a540;
   cursor: pointer;
-  border: 1px solid green;
+  border: 1px solid #709255;
+  color: black;
 }
 button:hover {
-  background-color: rgb(100, 198, 64);
+  background-color: #709255;
   border: 1px solid black;
 }
 button:focus,
