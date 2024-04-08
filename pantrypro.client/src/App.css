@@ -63,7 +63,6 @@ th, td {
     display: flex;
     flex-wrap: wrap;
     gap: 25px;
-
 }
 
 .item-dropdown-list {

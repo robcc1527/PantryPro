@@ -23,9 +23,7 @@ const Dashboard = ({pantryList}) => {
                 </div>
             </div>
             <div className="item-dashboard-container">
-                
                 {pantryList.length == 0 ? 'Add item from pantry list' : displayItems}
-                
             </div>
         </div>
     )
