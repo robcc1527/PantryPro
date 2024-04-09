@@ -1,3 +1,4 @@
+using System.Data.Entity.Core.Metadata.Edm;
 using Microsoft.AspNetCore.Mvc;
 using PantryPro.Server.DataBase;
 
@@ -16,6 +17,8 @@ namespace PantryPro.Server.Controllers
 
         private readonly PantryProAppContext _dbContext;
         private readonly ILogger<GroceryItemController> _logger;
+
+        public object?[]? Id { get; private set; }
 
         public GroceryItemController(
             PantryProAppContext dbContext,
@@ -71,15 +74,25 @@ namespace PantryPro.Server.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult UpdateGroceryItem(int id, [FromBody] GroceryItem updatedGItem)
+
+        public ActionResult<GroceryItemPut> UpdateGroceryItem(int id, [FromBody] GroceryItemPut gItemPut)
         {
+            var groceryItemType = _dbContext.GroceryItemType.FirstOrDefault(gItemType => gItemType.Id == gItemPut.GroceryItemTypeId);
             var GItemId = _dbContext.GroceryItem.Find(id);
             if (GItemId == null)
             {
                 return NotFound();
             }
 
-            GItemId.Description = updatedGItem.Description;
+            GItemId.Description = gItemPut.Description;
+            GItemId.Protein = gItemPut.Protein;
+            GItemId.GroceryItemTypeId = gItemPut.GroceryItemTypeId;
+            GItemId.Carbs = gItemPut.Carbs;
+            GItemId.Calories = gItemPut.Calories;
+            GItemId.Weight = gItemPut.Weight;
+            GItemId.Fat = gItemPut.Fat;
+            GItemId.GroceryItemType = groceryItemType;
+
             _dbContext.SaveChanges();
             return NoContent();
         }
