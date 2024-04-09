@@ -18,7 +18,6 @@ namespace PantryPro.Server.Controllers
         private readonly PantryProAppContext _dbContext;
         private readonly ILogger<GroceryItemController> _logger;
 
-        public object?[]? Id { get; private set; }
 
         public GroceryItemController(
             PantryProAppContext dbContext,
