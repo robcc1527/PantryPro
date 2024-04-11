@@ -9,13 +9,6 @@ import Header from "./Components/Header/Header"
 import './Components/Header/Header.css';
 
 
-
-
-
-
-
-
-
 function App() {
 
     const groceryItem = [
@@ -38,7 +31,7 @@ function App() {
         
             <SideBar />
             <Routes>
-                <Route path='/dashboard' element={<Dashboard pantryList={pantryList}/>}/>
+                <Route path='/' element={<Dashboard pantryList={pantryList}/>}/>
                 <Route path='/pantry' element={<Pantry pantryData={handlePantry} groceryItem={groceryItem} />}/>
             </Routes>
             <Footer /> {/* Include the Footer component here */}
