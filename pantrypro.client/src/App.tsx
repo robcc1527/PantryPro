@@ -54,7 +54,7 @@ function App() {
       <SideBar />
       <Routes>
         <Route
-          path="/dashboard"
+          path="/"
           element={<Dashboard pantryList={pantryList} />}
         />
         <Route
