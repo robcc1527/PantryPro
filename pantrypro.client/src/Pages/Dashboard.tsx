@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 const Dashboard = ({pantryList}) => {
 
@@ -23,7 +24,8 @@ const Dashboard = ({pantryList}) => {
                 </div>
             </div>
             <div className="item-dashboard-container">
-                {pantryList.length == 0 ? 'Add item from pantry list' : displayItems}
+                {pantryList.length == 0 ? <Link to='/pantry'>Add item from pantry</Link> : displayItems}
+                
             </div>
         </div>
     )

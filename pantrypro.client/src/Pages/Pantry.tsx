@@ -1,12 +1,41 @@
-
 import { useState } from "react"
+import { IoCloseCircleOutline } from "react-icons/io5";
+
 
 
 const Pantry = ({groceryItem, pantryData}) => {
 
     const [itemsOnHand, setItemsOnHand] = useState<Array<any>>([])
-    const [selectedItem, setSelectedItem] = useState({})
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+    const [searchTerm, setSearchTerm] = useState('');
+    const [matchedItems, setMatchedItems] = useState([]);
+    const [selectedItem, setSelectedItem] = useState('');
+
+    const handleInputChange = (e) => {
+        const term = e.target.value;
+        setSearchTerm(term);
+        if (term) {
+          const matched = groceryItem.filter(item =>
+            item.item.toLowerCase().startsWith(term.toLowerCase())
+          );
+          setMatchedItems(matched);
+        } else {
+          setMatchedItems([]);
+        }
+      };
+    
+      const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+          if (matchedItems.length > 0) {
+            setSelectedItem(matchedItems[0]);
+            setItemsOnHand((prevState) => [...prevState, selectedItem]);
+            pantryData(itemsOnHand)
+            setMatchedItems([]);
+            setSearchTerm('');
+          }
+        }
+      };
+      console.log('matched items:',matchedItems)
     
     const handleSelectItemOnChange = (e) => {
         const selectedOptionId = parseInt(e.target.value)
@@ -21,10 +50,10 @@ const Pantry = ({groceryItem, pantryData}) => {
 
     const filterList = itemsOnHand.filter(item => item.description == selectedCategory)
 
-    const handleAddItem = () => {
-        setItemsOnHand((prevState) => [...prevState, selectedItem]);
-        pantryData(itemsOnHand)
-    }
+    // const handleAddItem = () => {
+    //     setItemsOnHand((prevState) => [...prevState, selectedItem]);
+    //     pantryData(itemsOnHand)
+    // }
 
     const incrementQuantity = (id, quantity) => {
         setItemsOnHand(itemsOnHand.map(item => {
@@ -48,6 +77,7 @@ const Pantry = ({groceryItem, pantryData}) => {
 
     const displayItems = itemsOnHand.map(item => (
             <div key={item.id} className="item-container">
+                <IoCloseCircleOutline className="close-icon"/>
                 <img src={item.img} alt={item.item} />
                 <span>{item.item}</span>
                 <span>{item.description}</span>
@@ -56,10 +86,6 @@ const Pantry = ({groceryItem, pantryData}) => {
                     <span>{item.quantity}</span>
                     <button onClick={() => incrementQuantity(item.id, item.quantity)}>+</button>
                 </div>
-                {/* <div className="edit-button-container">
-                    <button>edit</button>
-                    <button>Delete</button>
-                </div> */}
             </div>
     ))
 
@@ -73,10 +99,6 @@ const Pantry = ({groceryItem, pantryData}) => {
                 <span>{item.quantity}</span>
                 <button onClick={() => incrementQuantity(item.id, item.quantity)}>+</button>
             </div>
-            {/* <div className="edit-button-container">
-                <button>edit</button>
-                <button>Delete</button>
-            </div> */}
         </div>
 ))
 
@@ -90,24 +112,22 @@ const Pantry = ({groceryItem, pantryData}) => {
                             <option value='vegetable'>Vegetables</option>
                             <option value='meat'>Meats</option>
                 </select>
-                <select className="item-dropdown-list" onChange={handleSelectItemOnChange}>
-                    <option value=''>Select an option</option>
-                        {groceryItem.map(item => (
-                            <option 
-                                key={item.id} 
-                                value={item.id}
-                            >{item.item}</option>
-                        ))}
-                </select>
-                <button onClick={handleAddItem}>Add</button>
+                <input
+                    className="search-bar"
+                    type="text"
+                    value={searchTerm}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Search"
+                />
+                <button>New Item</button>
             </div>
-            
+            <div className="results-list">
+                {matchedItems.map(item => {
+                    return <div className="search-results" key={item.id}>{item.item}</div>
+                })}
+            </div>
             <h2>{itemsOnHand.length === 0 ? 'No items on pantry' : 'List of Items'}</h2>
-            {/* <div className="title-list">
-                <h3>Item</h3>
-                <h3>Item Type</h3>
-                <h3>Quantity</h3>
-            </div> */}
             <div className="item-list-container">
                 {selectedCategory ? displayFilteredList : displayItems}
             </div>
