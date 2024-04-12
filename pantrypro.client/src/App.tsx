@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SideBar from "./Components/Sidebar";
 import Pantry from "./Pages/Pantry";
 import Dashboard from "./Pages/Dashboard";
@@ -7,7 +7,7 @@ import "./App.css";
 import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Header/Header";
 import "./Components/Header/Header.css";
-import PantryForm from "./Pages/PantryForm";
+import PantryFormNew from "./Pages/PantryFormNew";
 import PantryFormDataCalls from "./Pages/PantryFormDataCalls";
 
 function App() {
@@ -53,17 +53,9 @@ function App() {
       <Header title="" /> {/* Render the Header component */}
       <SideBar />
       <Routes>
-        <Route
-          path="/dashboard"
-          element={<Dashboard pantryList={pantryList} />}
-        />
-        <Route
-          path="/pantry"
-          element={
-            <Pantry pantryData={handlePantry} groceryItem={groceryItem} />
-          }
-        />
-        <Route path="/pantry/pantry-new" element={<PantryForm />} />
+        <Route path="/" element={<Dashboard pantryList={pantryList} />} />
+        <Route path="/pantry" element={<Pantry />} />
+        <Route path="/pantry/new" element={<PantryFormNew />} />
         <Route
           path="/pantry/pantry-new-datacall"
           element={<PantryFormDataCalls />}

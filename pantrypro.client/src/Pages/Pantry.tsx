@@ -1,119 +1,181 @@
+import { useEffect, useState } from "react";
+import { IoCloseCircleOutline } from "react-icons/io5";
+import { GroceryItems } from "../mock_data/mockData";
+import { useNavigate } from "react-router-dom";
 
-import { useState } from "react"
+//Fake Api Call with mock data
+const fakeData = new Promise((resolve) => {
+  setTimeout(() => {
+    resolve(GroceryItems);
+  }, 1000);
+});
 
+const Pantry = () => {
+  const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [pantryItems, setPantryItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-const Pantry = ({groceryItem, pantryData}) => {
+  useEffect(() => {
+    fakeData.then((data) => {
+      setPantryItems(data ?? []);
+      setIsLoading(false);
+    });
+  }, []);
 
-    const [itemsOnHand, setItemsOnHand] = useState<Array<any>>([])
-    const [selectedItem, setSelectedItem] = useState({})
-    const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-    
-    const handleSelectItemOnChange = (e) => {
-        const selectedOptionId = parseInt(e.target.value)
-        const selectedOption = groceryItem.filter(option => option.id === selectedOptionId)
-        const selectedObj = selectedOption[0]
-        setSelectedItem(selectedObj)
+  const handleInputChange = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      //setItemsOnHand((prevState) => [...prevState, selectedItem]);
+      setSearchTerm("");
+    }
+  };
+
+  const handleFilterListOnChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
+  const incrementQuantity = (item) => {
+    item.quantity += 1;
+
+    const tempPantryItem = pantryItems.find(
+      (pantryItem) => pantryItem.id === item.id
+    );
+    tempPantryItem.quantity = item.quantity;
+
+    setPantryItems([...pantryItems]);
+  };
+
+  const decrementQuantity = (item) => {
+    if (item.quantity === 0) {
+      return;
     }
 
-    const handleFilterListOnChange = (e) => {
-        setSelectedCategory(e.target.value)
-    }
+    item.quantity -= 1;
 
-    const filterList = itemsOnHand.filter(item => item.description == selectedCategory)
+    const tempPantryItem = pantryItems.find(
+      (pantryItem) => pantryItem.id === item.id
+    );
+    tempPantryItem.quantity = item.quantity;
 
-    const handleAddItem = () => {
-        setItemsOnHand((prevState) => [...prevState, selectedItem]);
-        pantryData(itemsOnHand)
-    }
+    setPantryItems([...pantryItems]);
+  };
 
-    const incrementQuantity = (id, quantity) => {
-        setItemsOnHand(itemsOnHand.map(item => {
-            if(item.id == id) {
-                return {...item, quantity: item.quantity + 1}
-            } 
-            return item
-        }))
-        pantryData(itemsOnHand)
-    }
+  //   const displayItems = itemsOnHand.map((item) => (
+  //     <div key={item.id} className="item-container">
+  //       <IoCloseCircleOutline className="close-icon" />
+  //       <img src={item.img} alt={item.item} />
+  //       <span>{item.item}</span>
+  //       <span>{item.description}</span>
+  //       <div className="modify-quantity-container">
+  //         <button onClick={() => decrementQuantity(item.id, item.quantity)}>
+  //           -
+  //         </button>
+  //         <span>{item.quantity}</span>
+  //         <button onClick={() => incrementQuantity(item.id, item.quantity)}>
+  //           +
+  //         </button>
+  //       </div>
+  //     </div>
+  //   ));
 
-    const decrementQuantity = (id, quantity) => {
-        setItemsOnHand(itemsOnHand.map(item => {
-            if(item.id == id && item.quantity > 0) {
-                return {...item, quantity: item.quantity - 1}
-            } 
-            return item
-        }))
-        pantryData(itemsOnHand)
-    }
+  //   const displayFilteredList = filterList.map((item) => (
+  //     <div key={item.id} className="item-container">
+  //       <img src={item.img} alt={item.item} />
+  //       <span>{item.item}</span>
+  //       <span>{item.description}</span>
+  //       <div className="modify-quantity-container">
+  //         <button onClick={() => decrementQuantity(item.id, item.quantity)}>
+  //           -
+  //         </button>
+  //         <span>{item.quantity}</span>
+  //         <button onClick={() => incrementQuantity(item.id, item.quantity)}>
+  //           +
+  //         </button>
+  //       </div>
+  //     </div>
+  //   ));
 
-    const displayItems = itemsOnHand.map(item => (
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
+
+  return (
+    <div className="pantry-container">
+      <h1 className="title">Pantry</h1>
+      <div className="filter-search-add-container">
+        <select
+          className="dropdown-filter-items"
+          onChange={handleFilterListOnChange}
+        >
+          <option value="">Filter</option>
+          <option value="fruit">Fruits</option>
+          <option value="vegetable">Vegetables</option>
+          <option value="meat">Meats</option>
+        </select>
+        <input
+          className="search-bar"
+          type="text"
+          value={searchTerm}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          placeholder="Search"
+        />
+        <button
+          type="button"
+          onClick={() => {
+            navigate("new");
+          }}
+        >
+          New Item
+        </button>
+      </div>
+      <div className="results-list">
+        {/* {matchedItems.map((item) => {
+          return (
+            <div className="search-results" key={item.id}>
+              {item.item}
+            </div>
+          );
+        })} */}
+      </div>
+      {pantryItems.length === 0 && <h2>No items on pantry</h2>}
+
+      <div className="item-list-container">
+        {pantryItems
+          .filter(
+            (item) =>
+              selectedCategory === "" || item.description === selectedCategory
+          )
+          .filter((item) =>
+            item.item.toLowerCase().startsWith(searchTerm.toLowerCase())
+          )
+          .map((item) => (
             <div key={item.id} className="item-container">
-                <img src={item.img} alt={item.item} />
-                <span>{item.item}</span>
-                <span>{item.description}</span>
-                <div className="modify-quantity-container">
-                    <button onClick={() => decrementQuantity(item.id, item.quantity)}>-</button>
-                    <span>{item.quantity}</span>
-                    <button onClick={() => incrementQuantity(item.id, item.quantity)}>+</button>
-                </div>
-                {/* <div className="edit-button-container">
-                    <button>edit</button>
-                    <button>Delete</button>
-                </div> */}
-            </div>
-    ))
-
-    const displayFilteredList = filterList.map(item => (
-        <div key={item.id} className="item-container">
-            <img src={item.img} alt={item.item} />
-            <span>{item.item}</span>
-            <span>{item.description}</span>
-            <div className="modify-quantity-container">
-                <button onClick={() => decrementQuantity(item.id, item.quantity)}>-</button>
+              <IoCloseCircleOutline
+                className="close-icon"
+                onClick={() => {
+                  alert("Are you sure you want to delete?");
+                }}
+              />
+              <img src={item.img} alt={item.item} />
+              <span>{item.item}</span>
+              <span>{item.description}</span>
+              <div className="modify-quantity-container">
+                <button onClick={() => decrementQuantity(item)}>-</button>
                 <span>{item.quantity}</span>
-                <button onClick={() => incrementQuantity(item.id, item.quantity)}>+</button>
+                <button onClick={() => incrementQuantity(item)}>+</button>
+              </div>
             </div>
-            {/* <div className="edit-button-container">
-                <button>edit</button>
-                <button>Delete</button>
-            </div> */}
-        </div>
-))
+          ))}
+      </div>
+    </div>
+  );
+};
 
-    return (
-        <div className="pantry-container">
-            <h1 className="title">Pantry</h1>
-            <div className="filter-search-add-container">
-                <select className="dropdown-filter-items" onChange={handleFilterListOnChange}>
-                    <option value=''>Filter</option>
-                            <option value='fruit'>Fruits</option>
-                            <option value='vegetable'>Vegetables</option>
-                            <option value='meat'>Meats</option>
-                </select>
-                <select className="item-dropdown-list" onChange={handleSelectItemOnChange}>
-                    <option value=''>Select an option</option>
-                        {groceryItem.map(item => (
-                            <option 
-                                key={item.id} 
-                                value={item.id}
-                            >{item.item}</option>
-                        ))}
-                </select>
-                <button onClick={handleAddItem}>Add</button>
-            </div>
-            
-            <h2>{itemsOnHand.length === 0 ? 'No items on pantry' : 'List of Items'}</h2>
-            {/* <div className="title-list">
-                <h3>Item</h3>
-                <h3>Item Type</h3>
-                <h3>Quantity</h3>
-            </div> */}
-            <div className="item-list-container">
-                {selectedCategory ? displayFilteredList : displayItems}
-            </div>
-            
-        </div>
-    )
-}
-
-export default Pantry
+export default Pantry;

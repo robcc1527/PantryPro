@@ -26,11 +26,7 @@ namespace PantryPro.Server.Controllers
         [HttpGet(Name = "GetGroceryItemType")]
         public IEnumerable<GroceryItemType> GetGroceryItemTypeById()
         {
-            return Enumerable.Range(1, 5).Select(index => new GroceryItemType
-            {
-                Description = Descriptions[Random.Shared.Next(Descriptions.Length)],
-            })
-            .ToArray();
+            return _dbContext.GroceryItemType.ToList();
         }
 
         [HttpPost]

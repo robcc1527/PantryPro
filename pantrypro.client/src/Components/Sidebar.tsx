@@ -33,7 +33,7 @@ export default function SideBar() {
                     <ListItemIcon>
                         <AutoAwesomeMosaicOutlinedIcon />
                     </ListItemIcon>
-                    <ListItemText primary={<Link className='link' to={'/dashboard'}>Dashboard</Link>}/>
+                    <ListItemText primary={<Link className='link' to={'/'}>Dashboard</Link>}/>
                 </ListItemButton>
             </ListItem>
             <ListItem>
