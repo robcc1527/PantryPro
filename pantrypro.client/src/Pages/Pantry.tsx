@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { GroceryItems } from "../mock_data/mockData";
+import { useNavigate } from "react-router-dom";
 
 //Fake Api Call with mock data
 const fakeData = new Promise((resolve) => {
@@ -10,6 +11,7 @@ const fakeData = new Promise((resolve) => {
 });
 
 const Pantry = () => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState("");
   const [pantryItems, setPantryItems] = useState([]);
@@ -124,7 +126,14 @@ const Pantry = () => {
           onKeyDown={handleKeyDown}
           placeholder="Search"
         />
-        <button>New Item</button>
+        <button
+          type="button"
+          onClick={() => {
+            navigate("new");
+          }}
+        >
+          New Item
+        </button>
       </div>
       <div className="results-list">
         {/* {matchedItems.map((item) => {
@@ -148,7 +157,12 @@ const Pantry = () => {
           )
           .map((item) => (
             <div key={item.id} className="item-container">
-              <IoCloseCircleOutline className="close-icon" />
+              <IoCloseCircleOutline
+                className="close-icon"
+                onClick={() => {
+                  alert("Are you sure you want to delete?");
+                }}
+              />
               <img src={item.img} alt={item.item} />
               <span>{item.item}</span>
               <span>{item.description}</span>
