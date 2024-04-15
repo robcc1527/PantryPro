@@ -39,8 +39,17 @@ const PantryForm: React.FC = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+// Check if any required fields are empty
+  if (!formData.name || !formData.description || formData.weight <= 0 || formData.groceryItemTypeId === -1) {
+    alert("Please fill in all required fields.");
+    return; // Stop form submission if any required fields are empty
+  }
+
+try {
+    
+
     // Perform any necessary actions, such as sending data to a server
     console.log("Form submitted:", formData);
     //Reset form fields
@@ -55,6 +64,17 @@ const PantryForm: React.FC = () => {
       fat: 0,
     });
     navigate("/pantry");
+  
+   } catch (error) {
+    // Handle any errors that occur during the submission process
+    console.error("Error submitting form:", error);
+    // Optionally, display an error message to the user
+    alert("Failed to submit form. Please try again.");
+  }
+};
+ // Handle cancel/back button click
+  const handleCancel = () => {
+    navigate(-1); // Navigate back to the previous page
   };
 
   if (isLoading) {
@@ -151,6 +171,9 @@ const PantryForm: React.FC = () => {
         </label>
         <br />
         <button type="submit">Submit</button>
+        <button type="button" onClick={handleCancel}>
+          Cancel
+        </button>
       </form>
     </div>
   );
