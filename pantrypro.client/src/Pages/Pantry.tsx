@@ -31,7 +31,6 @@ const Pantry = () => {
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      //setItemsOnHand((prevState) => [...prevState, selectedItem]);
       setSearchTerm("");
     }
   };
@@ -52,10 +51,6 @@ const Pantry = () => {
   };
 
   const decrementQuantity = (item) => {
-    if (item.quantity === 0) {
-      return;
-    }
-
     item.quantity -= 1;
 
     const tempPantryItem = pantryItems.find(
@@ -63,43 +58,25 @@ const Pantry = () => {
     );
     tempPantryItem.quantity = item.quantity;
 
+    if (item.quantity <= 0) {
+      if (
+        window.confirm(
+          "Are you sure you want to delete this item? This action cannot be undone."
+        )
+      ) {
+        const updatedItems = pantryItems.filter(
+          (pantryItem) => pantryItem.id !== item.id
+        );
+        setPantryItems(updatedItems);
+      } else {
+        // If user cancels deletion, revert quantity back to 1
+        item.quantity = 1;
+        tempPantryItem.quantity = 1;
+      }
+    }
+
     setPantryItems([...pantryItems]);
   };
-
-  //   const displayItems = itemsOnHand.map((item) => (
-  //     <div key={item.id} className="item-container">
-  //       <IoCloseCircleOutline className="close-icon" />
-  //       <img src={item.img} alt={item.item} />
-  //       <span>{item.item}</span>
-  //       <span>{item.description}</span>
-  //       <div className="modify-quantity-container">
-  //         <button onClick={() => decrementQuantity(item.id, item.quantity)}>
-  //           -
-  //         </button>
-  //         <span>{item.quantity}</span>
-  //         <button onClick={() => incrementQuantity(item.id, item.quantity)}>
-  //           +
-  //         </button>
-  //       </div>
-  //     </div>
-  //   ));
-
-  //   const displayFilteredList = filterList.map((item) => (
-  //     <div key={item.id} className="item-container">
-  //       <img src={item.img} alt={item.item} />
-  //       <span>{item.item}</span>
-  //       <span>{item.description}</span>
-  //       <div className="modify-quantity-container">
-  //         <button onClick={() => decrementQuantity(item.id, item.quantity)}>
-  //           -
-  //         </button>
-  //         <span>{item.quantity}</span>
-  //         <button onClick={() => incrementQuantity(item.id, item.quantity)}>
-  //           +
-  //         </button>
-  //       </div>
-  //     </div>
-  //   ));
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -135,16 +112,7 @@ const Pantry = () => {
           New Item
         </button>
       </div>
-      <div className="results-list">
-        {/* {matchedItems.map((item) => {
-          return (
-            <div className="search-results" key={item.id}>
-              {item.item}
-            </div>
-          );
-        })} */}
-      </div>
-      {pantryItems.length === 0 && <h2>No items on pantry</h2>}
+      {pantryItems.length === 0 && <h2>No items in the pantry</h2>}
 
       <div className="item-list-container">
         {pantryItems
@@ -155,12 +123,22 @@ const Pantry = () => {
           .filter((item) =>
             item.item.toLowerCase().startsWith(searchTerm.toLowerCase())
           )
+          .filter((item) => item.quantity >= 0)
           .map((item) => (
             <div key={item.id} className="item-container">
               <IoCloseCircleOutline
                 className="close-icon"
                 onClick={() => {
-                  alert("Are you sure you want to delete?");
+                  if (
+                    window.confirm(
+                      "Are you sure you want to delete this item? This action cannot be undone."
+                    )
+                  ) {
+                    const updatedItems = pantryItems.filter(
+                      (pantryItem) => pantryItem.id !== item.id
+                    );
+                    setPantryItems(updatedItems);
+                  }
                 }}
               />
               <img src={item.img} alt={item.item} />
