@@ -59,8 +59,7 @@ namespace PantryPro.Server.Controllers
             }
 
             var GItem = new GroceryItem
-            {
-                Id = gItemPost.Id,
+            {                
                 Name = gItemPost.Name,
                 Description = gItemPost.Description,
                 Protein = gItemPost.Protein,
@@ -69,8 +68,7 @@ namespace PantryPro.Server.Controllers
                 Calories = gItemPost.Calories,
                 Weight = gItemPost.Weight,
                 Fat = gItemPost.Fat,
-                ImageUrl = gItemPost.ImageUrl,
-                GroceryItemType = groceryItemType,
+                ImageUrl = gItemPost.ImageUrl,                
             };
 
             _dbContext.GroceryItem.Add(GItem);

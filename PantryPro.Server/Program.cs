@@ -17,7 +17,9 @@ builder.Services.AddCors((options) =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                   policy =>
                   {
-                      policy.WithOrigins("http://localhost:3000");
+                      policy.WithOrigins("http://localhost:3000")
+                      .AllowAnyMethod()
+                      .AllowAnyHeader();
                   });
 });
 
@@ -43,7 +45,8 @@ var services = scope.ServiceProvider;
 try
 {
     var context = services.GetRequiredService<PantryProAppContext>();
-    await context.Database.MigrateAsync();
+    context.Database.EnsureCreated();
+    //await context.Database.MigrateAsync();
     await SeedType.SeedData(context);
     await SeedPantryItems.SeedData(context);
 }

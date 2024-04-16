@@ -6,7 +6,9 @@ const PantryForm: React.FC = () => {
   // State to store form data
   const [isLoading, setIsLoading] = useState(true);
   const [groceryItemTypes, setGroceryItemTypes] = useState([] as any[]);
+  const [selectedGroceryItemType, setSelectedGroceryItemType] = useState(-1);
   const [formData, setFormData] = useState({
+    id: 0,
     name: "",
     description: "",
     weight: 0,
@@ -23,6 +25,11 @@ const PantryForm: React.FC = () => {
       setIsLoading(false);
       setGroceryItemTypes(response.data);
     });
+
+    axios.get("http://localhost:5206/GroceryItem/1").then((response) => {
+      setFormData(response.data);
+      setSelectedGroceryItemType(response.data.groceryItemTypeId);
+    });
   }, []);
 
   // Handle form input changes
@@ -37,21 +44,26 @@ const PantryForm: React.FC = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // Check if any required fields are empty
+    if (
+      !formData.name ||
+      !formData.description ||
+      formData.weight <= 0 ||
+      formData.groceryItemTypeId === -1
+    ) {
+      alert("Please fill in all required fields.");
+      return; // Stop form submission if any required fields are empty
+    }
+
     // Perform any necessary actions, such as sending data to a server
     console.log("Form submitted:", formData);
-    //Reset form fields
-    setFormData({
-      name: "",
-      description: "",
-      weight: 0,
-      groceryItemTypeId: 0,
-      carbs: 0,
-      calories: 0,
-      protein: 0,
-      fat: 0,
-    });
+
+    await axios.put(
+      `http://localhost:5206/GroceryItem/${formData.id}`,
+      formData
+    );
   };
 
   if (isLoading) {
@@ -95,7 +107,11 @@ const PantryForm: React.FC = () => {
         <br />
         <label>
           Grocery Item Type:
-          <select name="groceryItemTypeId" onChange={handleInputChange}>
+          <select
+            name="groceryItemTypeId"
+            onChange={handleInputChange}
+            value={selectedGroceryItemType}
+          >
             <option value={-1}>Select grocery item type...</option>
             {groceryItemTypes.map((item) => {
               return (

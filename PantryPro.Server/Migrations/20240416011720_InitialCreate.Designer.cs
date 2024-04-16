@@ -11,7 +11,7 @@ using PantryPro.Server.DataBase;
 namespace PantryPro.Server.Migrations
 {
     [DbContext(typeof(PantryProAppContext))]
-    [Migration("20240415155523_InitialCreate")]
+    [Migration("20240416011720_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

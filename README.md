@@ -23,6 +23,17 @@ dotnet ef migrations add InitialCreate -p PantryPro.Server -s PantryPro.Server -
 
 Apply migration
 
-`````bash
-dotnet ef database update -p PantryPro.Server -s PantryPro.Server````
-`````
+```bash
+dotnet ef database update -p PantryPro.Server -s PantryPro.Server
+```
+
+If you need to remove the migration
+
+1st delete the migration file in the Migrations folder
+
+2nd drop tables
+
+```bash
+DROP TABLE "GroceryItem"
+DROP TABLE "GroceryItemType"
+```

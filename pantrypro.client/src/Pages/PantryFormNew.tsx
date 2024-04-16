@@ -41,38 +41,41 @@ const PantryForm: React.FC = () => {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-// Check if any required fields are empty
-  if (!formData.name || !formData.description || formData.weight <= 0 || formData.groceryItemTypeId === -1) {
-    alert("Please fill in all required fields.");
-    return; // Stop form submission if any required fields are empty
-  }
+    // Check if any required fields are empty
+    if (
+      !formData.name ||
+      !formData.description ||
+      formData.weight <= 0 ||
+      formData.groceryItemTypeId === -1
+    ) {
+      alert("Please fill in all required fields.");
+      return; // Stop form submission if any required fields are empty
+    }
 
-try {
-    
-
-    // Perform any necessary actions, such as sending data to a server
-    console.log("Form submitted:", formData);
-    //Reset form fields
-    setFormData({
-      name: "",
-      description: "",
-      weight: 0,
-      groceryItemTypeId: 0,
-      carbs: 0,
-      calories: 0,
-      protein: 0,
-      fat: 0,
-    });
-    navigate("/pantry");
-  
-   } catch (error) {
-    // Handle any errors that occur during the submission process
-    console.error("Error submitting form:", error);
-    // Optionally, display an error message to the user
-    alert("Failed to submit form. Please try again.");
-  }
-};
- // Handle cancel/back button click
+    try {
+      // Perform any necessary actions, such as sending data to a server
+      console.log("Form submitted:", formData);
+      //Reset form fields
+      setFormData({
+        name: "",
+        description: "",
+        weight: 0,
+        groceryItemTypeId: 0,
+        carbs: 0,
+        calories: 0,
+        protein: 0,
+        fat: 0,
+      });
+      await axios.post("http://localhost:5206/GroceryItem", formData);
+      navigate("/pantry");
+    } catch (error) {
+      // Handle any errors that occur during the submission process
+      console.error("Error submitting form:", error);
+      // Optionally, display an error message to the user
+      alert("Failed to submit form. Please try again.");
+    }
+  };
+  // Handle cancel/back button click
   const handleCancel = () => {
     navigate(-1); // Navigate back to the previous page
   };
