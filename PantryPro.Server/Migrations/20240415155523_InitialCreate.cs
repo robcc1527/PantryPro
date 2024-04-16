@@ -30,13 +30,15 @@ namespace PantryPro.Server.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true),
                     Protein = table.Column<int>(type: "integer", nullable: false),
                     GroceryItemTypeId = table.Column<int>(type: "integer", nullable: false),
                     Carbs = table.Column<int>(type: "integer", nullable: false),
                     Calories = table.Column<int>(type: "integer", nullable: false),
                     Weight = table.Column<int>(type: "integer", nullable: false),
-                    Fat = table.Column<int>(type: "integer", nullable: false)
+                    Fat = table.Column<int>(type: "integer", nullable: false),
+                    ImageUrl = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {

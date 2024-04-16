@@ -8,7 +8,9 @@ namespace PantryPro.Server
 
         [Required]
         [StringLength(100)]
-        public string Description { get; set; } = default!;
+
+        public string Name { get; set; } = default!;
+        public string? Description { get; set; }
 
         public int Protein { get; set; }
 
@@ -21,6 +23,7 @@ namespace PantryPro.Server
         public int Weight { get; set; }
 
         public int Fat { get; set; }
+        public string? ImageUrl { get; set; }
         public GroceryItemType GroceryItemType { get; set; } = default!;
     }
 }
