@@ -1,6 +1,8 @@
-using System.Data.Entity.Core.Metadata.Edm;
+
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PantryPro.Server.DataBase;
+
 
 
 
@@ -29,10 +31,10 @@ namespace PantryPro.Server.Controllers
         }
 
         [HttpGet(Name = "GetGroceryItems")]
-        public ActionResult<IEnumerable<GroceryItem>> GetGroceryItem()
+        public List<GroceryItem> GetGroceryItem()
         {
-            _dbContext.Database.EnsureCreated();
-            return _dbContext.GroceryItem.ToList();
+            var groceryItemType = _dbContext.GroceryItem.Include("GroceryItemType");
+            return groceryItemType.ToList();
         }
 
         [HttpGet("{id}")]
@@ -58,6 +60,8 @@ namespace PantryPro.Server.Controllers
 
             var GItem = new GroceryItem
             {
+                Id = gItemPost.Id,
+                Name = gItemPost.Name,
                 Description = gItemPost.Description,
                 Protein = gItemPost.Protein,
                 GroceryItemTypeId = gItemPost.GroceryItemTypeId,
@@ -65,11 +69,14 @@ namespace PantryPro.Server.Controllers
                 Calories = gItemPost.Calories,
                 Weight = gItemPost.Weight,
                 Fat = gItemPost.Fat,
-                GroceryItemType = groceryItemType
+                ImageUrl = gItemPost.ImageUrl,
+                GroceryItemType = groceryItemType,
             };
+
             _dbContext.GroceryItem.Add(GItem);
             _dbContext.SaveChanges();
             return CreatedAtAction(nameof(GetGroceryItemById), new { id = GItem.Id }, GItem);
+
         }
 
         [HttpPut("{id}")]
@@ -83,6 +90,7 @@ namespace PantryPro.Server.Controllers
                 return NotFound();
             }
 
+            GItemId.Name = gItemPut.Name;
             GItemId.Description = gItemPut.Description;
             GItemId.Protein = gItemPut.Protein;
             GItemId.GroceryItemTypeId = gItemPut.GroceryItemTypeId;
@@ -90,6 +98,7 @@ namespace PantryPro.Server.Controllers
             GItemId.Calories = gItemPut.Calories;
             GItemId.Weight = gItemPut.Weight;
             GItemId.Fat = gItemPut.Fat;
+            GItemId.ImageUrl = gItemPut.ImageUrl;
             GItemId.GroceryItemType = groceryItemType;
 
             _dbContext.SaveChanges();
