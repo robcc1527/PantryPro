@@ -24,6 +24,7 @@ namespace PantryPro.Server
 
         public int Fat { get; set; }
         public string? ImageUrl { get; set; }
+        public int Quantity { get; set; }
         public GroceryItemType GroceryItemType { get; set; } = default!;
     }
 }

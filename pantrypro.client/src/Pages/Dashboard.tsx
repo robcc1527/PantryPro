@@ -7,6 +7,7 @@ type PantryItem = {
   groceryItemType: object;
   id: number;
   name: string;
+  quantity: number;
   calories: number;
   groceryItemTypeId: number;
 };
@@ -27,7 +28,7 @@ console.log(pantryList);
         <div key={item.id} className="item-dashboard">
           <span>{item.name}</span>
           <span>{item.groceryItemType.description}</span>
-          <span>{item.groceryItemTypeId}</span>
+          <span>{item.quantity}</span>
         </div>
       );
     });
@@ -41,6 +42,11 @@ console.log(pantryList);
         <button type="button" onClick={() => navigate("/pantry")}>
           Add Item
         </button>
+        <span className="PantryListHeader">
+        <h3>Name</h3>
+        <h3>Type</h3>
+        <h3>Qty</h3>
+        </span>        
       </div>
       <div className="item-dashboard-container">
         {pantryList.length == 0 ? (
