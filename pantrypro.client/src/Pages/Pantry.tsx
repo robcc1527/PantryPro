@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IoCloseCircleOutline } from "react-icons/io5";
+import { IoCloseCircleOutline, IoCreateOutline } from "react-icons/io5";
 import { GroceryItems } from "../mock_data/mockData";
 import { useNavigate } from "react-router-dom";
 
@@ -77,6 +77,12 @@ const Pantry = () => {
 
     setPantryItems([...pantryItems]);
   };
+//
+const handleEditItem = (itemId) => {
+    // Navigate to PantryFormEdit component with the item ID
+    navigate(`/edit/${itemId}`);
+  };
+//
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -140,6 +146,10 @@ const Pantry = () => {
                     setPantryItems(updatedItems);
                   }
                 }}
+              />
+              <IoCreateOutline
+                className="edit-icon"
+                onClick={() => handleEditItem(item.id)}
               />
               <img src={item.img} alt={item.item} />
               <span>{item.item}</span>
