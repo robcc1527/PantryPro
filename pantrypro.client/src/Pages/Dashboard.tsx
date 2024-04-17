@@ -1,8 +1,10 @@
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 type PantryItem = {
+  groceryItemType: object;
   id: number;
   name: string;
   calories: number;
@@ -18,13 +20,13 @@ const Dashboard = () => {
   useEffect(() => {
     axios.get(url).then((json) => setPantryList(json.data));
   }, []);
-
+console.log(pantryList);
   const displayItems = () => {
     return pantryList.map((item) => {
       return (
         <div key={item.id} className="item-dashboard">
           <span>{item.name}</span>
-          <span>{item.calories}</span>
+          <span>{item.groceryItemType.description}</span>
           <span>{item.groceryItemTypeId}</span>
         </div>
       );

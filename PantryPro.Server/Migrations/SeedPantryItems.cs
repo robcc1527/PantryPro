@@ -992,7 +992,7 @@ namespace PantryPro.Server.Migrations
             Calories = 862,
             Weight = 100,
             Fat = 100,
-            ImageUrl="https://images.unsplash.com/photo-1628602040839-682c1c959aac?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8Y29jb251dCUyMG9pbHxlbnwwfHwwfHx8MA%3D%3D"
+            ImageUrl="https://images.unsplash.com/photo-1579613832125-5d34a13ffe2a?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXBwbGV8ZW58MHx8MHx8fDA%3D"
           },
             new GroceryItem{
             //Id =  91,

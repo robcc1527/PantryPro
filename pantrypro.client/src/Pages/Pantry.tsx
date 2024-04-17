@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { GroceryItems } from "../mock_data/mockData";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 //Fake Api Call with mock data
 const fakeData = new Promise((resolve) => {
@@ -12,17 +13,27 @@ const fakeData = new Promise((resolve) => {
 
 const Pantry = () => {
   const navigate = useNavigate();
+  const url = "http://localhost:5206/GroceryItem";
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState("");
   const [pantryItems, setPantryItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+
   useEffect(() => {
-    fakeData.then((data) => {
-      setPantryItems(data ?? []);
+    axios.get(url).then((json) =>{
+      setPantryItems(json.data ?? []);
       setIsLoading(false);
     });
   }, []);
+console.log(pantryItems);
+
+  // useEffect(() => {
+  //   fakeData.then((data) => {
+  //     setPantryItems(data ?? []);
+  //     setIsLoading(false);
+  //   });
+  // }, []);
 
   const handleInputChange = (e) => {
     const term = e.target.value;
@@ -118,12 +129,12 @@ const Pantry = () => {
         {pantryItems
           .filter(
             (item) =>
-              selectedCategory === "" || item.description === selectedCategory
+              selectedCategory === "" || item.groceryItemType.description === selectedCategory
           )
           .filter((item) =>
-            item.item.toLowerCase().startsWith(searchTerm.toLowerCase())
+            item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
           )
-          .filter((item) => item.quantity >= 0)
+          .filter((item) => item.calories >= 0)
           .map((item) => (
             <div key={item.id} className="item-container">
               <IoCloseCircleOutline
@@ -141,12 +152,12 @@ const Pantry = () => {
                   }
                 }}
               />
-              <img src={item.img} alt={item.item} />
-              <span>{item.item}</span>
-              <span>{item.description}</span>
+              <img src={item.imageUrl} alt={item.item} />
+              <span>{item.name}</span>
+              {/* <span>{item.fat}</span> */}
               <div className="modify-quantity-container">
                 <button onClick={() => decrementQuantity(item)}>-</button>
-                <span>{item.quantity}</span>
+                <span>{item.fat}</span>
                 <button onClick={() => incrementQuantity(item)}>+</button>
               </div>
             </div>
