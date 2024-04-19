@@ -1139,6 +1139,12 @@ namespace PantryPro.Server.Migrations
           }
               };
 
+      var random = new Random();
+      foreach (var g in item){
+        //populate quantity with a random value from 1 to 10        
+        g.Quantity = random.Next(1, 10);
+      }      
+
       await context.GroceryItem.AddRangeAsync(item);//item);
       await context.SaveChangesAsync();
 

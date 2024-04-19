@@ -11,7 +11,7 @@ using PantryPro.Server.DataBase;
 namespace PantryPro.Server.Migrations
 {
     [DbContext(typeof(PantryProAppContext))]
-    [Migration("20240416011720_InitialCreate")]
+    [Migration("20240419012310_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -56,6 +56,9 @@ namespace PantryPro.Server.Migrations
                         .HasColumnType("character varying(100)");
 
                     b.Property<int>("Protein")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
                     b.Property<int>("Weight")

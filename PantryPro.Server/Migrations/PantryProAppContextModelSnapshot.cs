@@ -55,6 +55,9 @@ namespace PantryPro.Server.Migrations
                     b.Property<int>("Protein")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Weight")
                         .HasColumnType("integer");
 

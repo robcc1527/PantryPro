@@ -36,6 +36,7 @@ If you need to remove the migration
 2nd drop tables
 
 ```bash
+DROP TABLE "__EFMigrationsHistory"
 DROP TABLE "GroceryItem"
 DROP TABLE "GroceryItemType"
 ```
