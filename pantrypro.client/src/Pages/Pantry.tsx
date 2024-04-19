@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { GroceryItems } from "../mock_data/mockData";
 import { useNavigate } from "react-router-dom";
+import { GiPencil } from "react-icons/gi";
+import axios from "axios";
 
 //Fake Api Call with mock data
 const fakeData = new Promise((resolve) => {
@@ -12,17 +14,29 @@ const fakeData = new Promise((resolve) => {
 
 const Pantry = () => {
   const navigate = useNavigate();
+  const urlGetItem = "http://localhost:5206/GroceryItem";
+  const urlGetType = "http://localhost:5206/GroceryItemType";
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [searchTerm, setSearchTerm] = useState("");
   const [pantryItems, setPantryItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [pantryType, setPantyType] = useState([]);
+
 
   useEffect(() => {
-    fakeData.then((data) => {
-      setPantryItems(data ?? []);
+    axios.get(urlGetItem).then((json) =>{
+      setPantryItems(json.data ?? []);
       setIsLoading(false);
     });
   }, []);
+
+  useEffect(() => {
+    axios.get(urlGetType).then((json) =>{
+      setPantyType(json.data ?? []);
+      setIsLoading(false);
+    });
+  }, []);
+console.log(pantryType);
 
   const handleInputChange = (e) => {
     const term = e.target.value;
@@ -90,10 +104,12 @@ const Pantry = () => {
           className="dropdown-filter-items"
           onChange={handleFilterListOnChange}
         >
+          {/*Bring in Data from GroceryItemType to populate*/}
           <option value="">Filter</option>
-          <option value="fruit">Fruits</option>
-          <option value="vegetable">Vegetables</option>
-          <option value="meat">Meats</option>
+          {pantryType.map((item) => (
+            <option key={item}>{item.description} </option>
+          ))
+        }
         </select>
         <input
           className="search-bar"
@@ -118,13 +134,13 @@ const Pantry = () => {
         {pantryItems
           .filter(
             (item) =>
-              selectedCategory === "" || item.description === selectedCategory
+              selectedCategory === "" || item.groceryItemType.description === selectedCategory
           )
-          .filter((item) =>
-            item.item.toLowerCase().startsWith(searchTerm.toLowerCase())
-          )
-          .filter((item) => item.quantity >= 0)
-          .map((item) => (
+           .filter((item) =>
+             item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+           )
+           .filter((item) => item.calories >= 0)
+           .map((item) => (
             <div key={item.id} className="item-container">
               <IoCloseCircleOutline
                 className="close-icon"
@@ -141,9 +157,16 @@ const Pantry = () => {
                   }
                 }}
               />
-              <img src={item.img} alt={item.item} />
-              <span>{item.item}</span>
-              <span>{item.description}</span>
+              <GiPencil
+                className="GiPencil"
+                onClick={(e) => {
+                  console.log(item.id);
+                  navigate(`pantryformedit/25`);
+                }}
+              />
+              <img src={item.imageUrl} alt={item.item} />
+              <span>{item.name}</span>
+              {/* <span>{item.fat}</span> */}
               <div className="modify-quantity-container">
                 <button onClick={() => decrementQuantity(item)}>-</button>
                 <span>{item.quantity}</span>

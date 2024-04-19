@@ -1,3 +1,5 @@
+<!-- @format -->
+
 # PantryPro
 
 ## Setting up the database
@@ -37,3 +39,13 @@ If you need to remove the migration
 DROP TABLE "GroceryItem"
 DROP TABLE "GroceryItemType"
 ```
+
+PostGresql
+Adding Quantity to GroceryItem
+ALTER TABLE "GroceryItem"
+ADD COLUMN "Quantity" int
+
+Adding Random ints to Quantity
+UPDATE "GroceryItem"
+SET "Quantity" = floor(Random() \* 10) + 1
+WHERE MOD("Id",27)=0

@@ -1,10 +1,13 @@
+
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 type PantryItem = {
+  groceryItemType: object;
   id: number;
   name: string;
+  quantity: number;
   calories: number;
   groceryItemTypeId: number;
 };
@@ -18,14 +21,14 @@ const Dashboard = () => {
   useEffect(() => {
     axios.get(url).then((json) => setPantryList(json.data));
   }, []);
-
+console.log(pantryList);
   const displayItems = () => {
     return pantryList.map((item) => {
       return (
         <div key={item.id} className="item-dashboard">
           <span>{item.name}</span>
-          <span>{item.calories}</span>
-          <span>{item.groceryItemTypeId}</span>
+          <span>{item.groceryItemType.description}</span>
+          <span>{item.quantity}</span>
         </div>
       );
     });
@@ -39,6 +42,11 @@ const Dashboard = () => {
         <button type="button" onClick={() => navigate("/pantry")}>
           Add Item
         </button>
+        <span className="PantryListHeader">
+        <h3>Name</h3>
+        <h3>Type</h3>
+        <h3>Qty</h3>
+        </span>        
       </div>
       <div className="item-dashboard-container">
         {pantryList.length == 0 ? (
