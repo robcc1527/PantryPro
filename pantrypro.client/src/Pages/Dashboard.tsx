@@ -37,18 +37,19 @@ console.log(pantryList);
   return (
     <div>
       <h1 className="title">Dashboard Page</h1>
-      <div>
-        <h2>Pantry List</h2>
-        <button type="button" onClick={() => navigate("/pantry")}>
+      <div  className="dashboard-button-container">
+        <h3 className="grid-item-one">Pantry List</h3>
+        <button  className ="grid-item-two" type="button" onClick={() => navigate("/pantry")}>
           Add Item
         </button>
-        <span className="PantryListHeader">
-        <h3>Name</h3>
-        <h3>Type</h3>
-        <h3>Qty</h3>
-        </span>        
+
       </div>
       <div className="item-dashboard-container">
+            <div className="dashboard-header">
+              <h3 className = "list-item-one">Ingredient</h3>
+              <h3 className = "list-item-two">Type</h3>
+              <h3 className = "list-item-three">quantity</h3>
+            </div>
         {pantryList.length == 0 ? (
           <Link to="/pantry">Add item from pantry</Link>
         ) : (
