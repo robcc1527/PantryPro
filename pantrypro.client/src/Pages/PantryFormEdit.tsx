@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Assuming you're using React Router v6
 import "./PantryForm.css";
 
 const PantryForm: React.FC = () => {
+  const navigate = useNavigate();
+
   // State to store form data
   const [isLoading, setIsLoading] = useState(true);
   const [groceryItemTypes, setGroceryItemTypes] = useState([] as any[]);
-  const [selectedGroceryItemType, setSelectedGroceryItemType] = useState(-1);
   const [formData, setFormData] = useState({
-    id: 0,
     name: "",
     description: "",
     weight: 0,
@@ -25,11 +26,6 @@ const PantryForm: React.FC = () => {
       setIsLoading(false);
       setGroceryItemTypes(response.data);
     });
-
-    axios.get("http://localhost:5206/GroceryItem/1").then((response) => {
-      setFormData(response.data);
-      setSelectedGroceryItemType(response.data.groceryItemTypeId);
-    });
   }, []);
 
   // Handle form input changes
@@ -44,31 +40,31 @@ const PantryForm: React.FC = () => {
   };
 
   // Handle form submission
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Check if any required fields are empty
-    if (
-      !formData.name ||
-      !formData.description ||
-      formData.weight <= 0 ||
-      formData.groceryItemTypeId === -1
-    ) {
-      alert("Please fill in all required fields.");
-      return; // Stop form submission if any required fields are empty
-    }
-
     // Perform any necessary actions, such as sending data to a server
     console.log("Form submitted:", formData);
-
-    await axios.put(
-      `http://localhost:5206/GroceryItem/${formData.id}`,
-      formData
-    );
+    //Reset form fields
+    setFormData({
+      name: "",
+      description: "",
+      weight: 0,
+      groceryItemTypeId: 0,
+      carbs: 0,
+      calories: 0,
+      protein: 0,
+      fat: 0,
+    });
   };
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
+
+  const handleCancel = () => {
+    // Navigate to previous page
+    navigate(-1);
+  };
 
   return (
     <div>
@@ -107,11 +103,7 @@ const PantryForm: React.FC = () => {
         <br />
         <label>
           Grocery Item Type:
-          <select
-            name="groceryItemTypeId"
-            onChange={handleInputChange}
-            value={selectedGroceryItemType}
-          >
+          <select name="groceryItemTypeId" onChange={handleInputChange}>
             <option value={-1}>Select grocery item type...</option>
             {groceryItemTypes.map((item) => {
               return (
@@ -164,6 +156,7 @@ const PantryForm: React.FC = () => {
         </label>
         <br />
         <button type="submit">Submit</button>
+        <button type="button" onClick={handleCancel}>Cancel</button>
       </form>
     </div>
   );
