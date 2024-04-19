@@ -92,7 +92,7 @@ const Pantry = () => {
   //
   const handleEditItem = (itemId) => {
     // Navigate to PantryFormEdit component with the item ID
-    navigate(`/edit/${itemId}`);
+    navigate(`/pantry/${itemId}`);
   };
   //
 
@@ -111,7 +111,7 @@ const Pantry = () => {
           {/*Bring in Data from GroceryItemType to populate*/}
           <option value="">Filter</option>
           {pantryType.map((item) => (
-            <option key={item}>{item.description} </option>
+            <option key={item.id}>{item.description} </option>
           ))}
         </select>
         <input
