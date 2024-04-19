@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
-import { IoCloseCircleOutline } from "react-icons/io5";
+import { IoCloseCircleOutline, IoCreateOutline } from "react-icons/io5";
 import { GroceryItems } from "../mock_data/mockData";
 import { useNavigate } from "react-router-dom";
-import { GiPencil } from "react-icons/gi";
 import axios from "axios";
 
 //Fake Api Call with mock data
@@ -22,21 +21,20 @@ const Pantry = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [pantryType, setPantyType] = useState([]);
 
-
   useEffect(() => {
-    axios.get(urlGetItem).then((json) =>{
+    axios.get(urlGetItem).then((json) => {
       setPantryItems(json.data ?? []);
       setIsLoading(false);
     });
   }, []);
 
   useEffect(() => {
-    axios.get(urlGetType).then((json) =>{
+    axios.get(urlGetType).then((json) => {
       setPantyType(json.data ?? []);
       setIsLoading(false);
     });
   }, []);
-console.log(pantryType);
+  console.log(pantryType);
 
   const handleInputChange = (e) => {
     const term = e.target.value;
@@ -91,6 +89,12 @@ console.log(pantryType);
 
     setPantryItems([...pantryItems]);
   };
+  //
+  const handleEditItem = (itemId) => {
+    // Navigate to PantryFormEdit component with the item ID
+    navigate(`/pantry/${itemId}`);
+  };
+  //
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -107,9 +111,8 @@ console.log(pantryType);
           {/*Bring in Data from GroceryItemType to populate*/}
           <option value="">Filter</option>
           {pantryType.map((item) => (
-            <option key={item}>{item.description} </option>
-          ))
-        }
+            <option key={item.id}>{item.description} </option>
+          ))}
         </select>
         <input
           className="search-bar"
@@ -134,13 +137,14 @@ console.log(pantryType);
         {pantryItems
           .filter(
             (item) =>
-              selectedCategory === "" || item.groceryItemType.description === selectedCategory
+              selectedCategory === "" ||
+              item.groceryItemType.description === selectedCategory
           )
-           .filter((item) =>
-             item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
-           )
-           .filter((item) => item.calories >= 0)
-           .map((item) => (
+          .filter((item) =>
+            item.name.toLowerCase().startsWith(searchTerm.toLowerCase())
+          )
+          .filter((item) => item.calories >= 0)
+          .map((item) => (
             <div key={item.id} className="item-container">
               <IoCloseCircleOutline
                 className="close-icon"
@@ -157,16 +161,13 @@ console.log(pantryType);
                   }
                 }}
               />
-              <GiPencil
-                className="GiPencil"
-                onClick={(e) => {
-                  console.log(item.id);
-                  navigate(`pantryformedit/25`);
-                }}
+              <IoCreateOutline
+                className="edit-icon"
+                onClick={() => handleEditItem(item.id)}
               />
               <img src={item.imageUrl} alt={item.item} />
               <span>{item.name}</span>
-              {/* <span>{item.fat}</span> */}
+              <span>{item.description}</span>
               <div className="modify-quantity-container">
                 <button onClick={() => decrementQuantity(item)}>-</button>
                 <span>{item.quantity}</span>

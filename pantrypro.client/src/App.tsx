@@ -11,6 +11,8 @@ import PantryFormNew from "./Pages/PantryFormNew";
 
 import PantryFormEdit from "./Pages/PantryFormEdit";
 
+
+
 function App() {
   return (
     <Router>
@@ -21,6 +23,7 @@ function App() {
         <Route path="/pantry" element={<Pantry />} />
         <Route path="/pantry/new" element={<PantryFormNew />} />
         <Route path="/pantry/:id" element={<PantryFormEdit />} />
+ <Route path="/edit/:itemId" element={<PantryFormEdit />} />      
       </Routes>
       <Footer /> {/* Include the Footer component here */}
     </Router>
