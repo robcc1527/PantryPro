@@ -28,6 +28,9 @@ th,
 td {
   padding-left: 1rem;
   padding-right: 1rem;
+th, td {
+    padding-left: 7rem;
+    padding-right: 5rem;
 }
 
 /* Sidebar */
@@ -80,8 +83,10 @@ td {
   text-align: center;
   font-weight: bold;
   background-color: rgb(80, 165, 80);
+  cursor: pointer
 }
 
+    
 .title-list {
   display: grid;
   justify-content: center;
@@ -139,6 +144,12 @@ td {
   left: 155px;
   cursor: pointer;
 }
+.edit-icon {
+  position: relative;
+  bottom: 10px;
+  left: 10px;
+  cursor: pointer;
+}
 
 .item-container > img {
   margin: 0 auto;
@@ -152,6 +163,8 @@ td {
   grid-template-columns: 100px 100px;
   gap: 20px;
 }
+
+
 
 .modify-quantity-container {
   display: grid;
@@ -190,11 +203,50 @@ td {
 .item-dashboard {
   display: grid;
   justify-content: center;
-  grid-template-columns: 200px 200px 200px;
+  grid-template-columns: 300px 200px 200px;
   gap: 20px;
   padding-bottom: 20px;
 }
+.dashboard-button-container{
+    display: grid;
+    grid-template-columns: (1fr, 1);
+    grid-auto-rows: minmax(10px, 40px);
+    gap: 100px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+.grid-item-one{
+    grid-column: 1;
+    grid-row: 1;
 
+}
+.grid-item-two {
+    grid-column: 4 / 4;
+    grid-row: 1;
+  }
+
+.dashboard-header{
+    color: rgb(0, 128, 0 );
+    display: grid;
+    text-transform:uppercase;
+    grid-auto-rows: minmax(10px, 40px);
+    padding-bottom: 10px;
+}
+
+.list-item-one{
+    grid-column: span 2;
+    grid-row: 1;
+}
+
+.list-item-two{
+    grid-column: span 2;
+    grid-row: 1;
+}
+
+.list-item-three{
+    grid-column: span 1;
+    grid-row: 1;
+}
 .modal-overlay {
   position: fixed;
   top: 0;

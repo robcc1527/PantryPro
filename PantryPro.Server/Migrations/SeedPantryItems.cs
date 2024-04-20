@@ -23,7 +23,7 @@ namespace PantryPro.Server.Migrations
                 Calories= 95,
                 Weight= 182,
                 Fat= 0,
-                ImageUrl= "https=//images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixId=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YXBwbGV8ZW58MHx8MHx8fDA%3D",
+                ImageUrl= "https://images.unsplash.com/photo-1579613832125-5d34a13ffe2a?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXBwbGV8ZW58MHx8MHx8fDA%3D",
                 },
                 new GroceryItem{
 

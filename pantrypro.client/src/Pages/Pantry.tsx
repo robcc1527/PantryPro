@@ -1,16 +1,9 @@
 import { useEffect, useState } from "react";
 import { IoCloseCircleOutline, IoCreateOutline } from "react-icons/io5";
-import { GroceryItems } from "../mock_data/mockData";
 import { useNavigate } from "react-router-dom";
 import DeleteConfirmationModal from "../Components/DeleteConfirmationModal";
 import axios from "axios";
 
-//Fake Api Call with mock data
-const fakeData = new Promise((resolve) => {
-  setTimeout(() => {
-    resolve(GroceryItems);
-  }, 1000);
-});
 
 const Pantry = () => {
   const navigate = useNavigate();
@@ -95,7 +88,7 @@ const Pantry = () => {
   //
   const handleEditItem = (itemId) => {
     // Navigate to PantryFormEdit component with the item ID
-    navigate(`/edit/${itemId}`);
+    navigate(`/pantry/${itemId}`);
   };
   //
   const handleCloseModal = () => {
@@ -118,7 +111,7 @@ const Pantry = () => {
           {/*Bring in Data from GroceryItemType to populate*/}
           <option value="">Filter</option>
           {pantryType.map((item) => (
-            <option key={item}>{item.description} </option>
+            <option key={item.id}>{item.description} </option>
           ))}
         </select>
         <input
@@ -192,7 +185,7 @@ const Pantry = () => {
                   setIsModalVisible(true);
                 }}
               />
-              <IoCreateOutline
+              <IoCreateOutline 
                 className="edit-icon"
                 onClick={() => handleEditItem(item.id)}
               />
