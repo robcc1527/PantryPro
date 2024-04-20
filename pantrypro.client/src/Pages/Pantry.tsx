@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { IoCloseCircleOutline, IoCreateOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import DeleteConfirmationModal from "../Components/DeleteConfirmationModal";
 import axios from "axios";
 
 
@@ -13,6 +14,8 @@ const Pantry = () => {
   const [pantryItems, setPantryItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pantryType, setPantyType] = useState([]);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [currentDeleteItem, setCurrentDeleteItem] = useState(null);
 
   useEffect(() => {
     axios.get(urlGetItem).then((json) => {
@@ -88,6 +91,10 @@ const Pantry = () => {
     navigate(`/pantry/${itemId}`);
   };
   //
+  const handleCloseModal = () => {
+    setCurrentDeleteItem(null);
+    setIsModalVisible(false);
+  };
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -124,6 +131,38 @@ const Pantry = () => {
           New Item
         </button>
       </div>
+
+      {isModalVisible && (
+        <div
+          className={isModalVisible ? "modal-overlay show" : "modal-overlay"}
+        >
+          <div className="modal">
+            <h2>Are you sure you want to delete item?</h2>
+            <div className="modal-buttons">
+              <button
+                onClick={async () => {
+                  if (currentDeleteItem !== null) {
+                    await axios.delete(
+                      `http://localhost:5206/GroceryItem/${currentDeleteItem}`
+                    );
+
+                    const updatedItems = pantryItems.filter(
+                      (pantryItem) => pantryItem.id !== currentDeleteItem
+                    );
+                    setPantryItems(updatedItems);
+                  }
+                  setCurrentDeleteItem(null);
+                  setIsModalVisible(false);
+                }}
+              >
+                Delete
+              </button>
+              <button onClick={handleCloseModal}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {pantryItems.length === 0 && <h2>No items in the pantry</h2>}
 
       <div className="item-list-container">
@@ -142,16 +181,8 @@ const Pantry = () => {
               <IoCloseCircleOutline
                 className="close-icon"
                 onClick={() => {
-                  if (
-                    window.confirm(
-                      "Are you sure you want to delete this item? This action cannot be undone."
-                    )
-                  ) {
-                    const updatedItems = pantryItems.filter(
-                      (pantryItem) => pantryItem.id !== item.id
-                    );
-                    setPantryItems(updatedItems);
-                  }
+                  setCurrentDeleteItem(item.id);
+                  setIsModalVisible(true);
                 }}
               />
               <IoCreateOutline 
