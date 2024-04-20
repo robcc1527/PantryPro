@@ -1,15 +1,8 @@
 import { useEffect, useState } from "react";
 import { IoCloseCircleOutline, IoCreateOutline } from "react-icons/io5";
-import { GroceryItems } from "../mock_data/mockData";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-//Fake Api Call with mock data
-const fakeData = new Promise((resolve) => {
-  setTimeout(() => {
-    resolve(GroceryItems);
-  }, 1000);
-});
 
 const Pantry = () => {
   const navigate = useNavigate();
@@ -161,7 +154,7 @@ const Pantry = () => {
                   }
                 }}
               />
-              <IoCreateOutline
+              <IoCreateOutline 
                 className="edit-icon"
                 onClick={() => handleEditItem(item.id)}
               />
