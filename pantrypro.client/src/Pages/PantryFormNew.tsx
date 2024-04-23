@@ -9,7 +9,7 @@ const PantryForm: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [groceryItemTypes, setGroceryItemTypes] = useState([] as any[]);
   const [formData, setFormData] = useState({
-    name: "",
+    name: "Enter name of ingredient",
     description: "",
     weight: 0,
     groceryItemTypeId: -1,
@@ -17,6 +17,8 @@ const PantryForm: React.FC = () => {
     calories: 0,
     protein: 0,
     fat: 0,
+    quantity: 0,
+    imageUrl: "www.imageAddress.com",
   });
 
   useEffect(() => {
@@ -65,6 +67,8 @@ const PantryForm: React.FC = () => {
         calories: 0,
         protein: 0,
         fat: 0,
+        quantity: 0,
+        imageUrl: "",
       });
       await axios.post("http://localhost:5206/GroceryItem", formData);
       navigate("/pantry");
@@ -169,6 +173,26 @@ const PantryForm: React.FC = () => {
             type="number"
             name="fat"
             value={formData.fat}
+            onChange={handleInputChange}
+          />
+        </label>
+        <br />
+        <label>
+          Quantity:
+          <input
+            type="number"
+            name="quantity"
+            value={formData.quantity}
+            onChange={handleInputChange}
+          />
+        </label>
+        <br />
+        <label>
+          ImageUrl:
+          <input
+            type="imageUrl"
+            name="imageUrl"
+            value={formData.imageUrl}
             onChange={handleInputChange}
           />
         </label>

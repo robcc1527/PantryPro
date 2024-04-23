@@ -45,8 +45,8 @@ var services = scope.ServiceProvider;
 try
 {
     var context = services.GetRequiredService<PantryProAppContext>();
-    //context.Database.EnsureCreated();
-    //await context.Database.MigrateAsync();
+    context.Database.EnsureCreated();
+    await context.Database.MigrateAsync();
     await SeedType.SeedData(context);
     await SeedPantryItems.SeedData(context);
 }

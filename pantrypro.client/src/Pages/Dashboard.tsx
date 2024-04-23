@@ -1,6 +1,7 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { IoCloseCircleOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 
 type PantryItem = {
