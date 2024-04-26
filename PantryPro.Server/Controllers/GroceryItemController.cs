@@ -1,7 +1,7 @@
-using System.Data.Entity;
+
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PantryPro.Server.DataBase;
-using PantryPro.Server.Models;
 
 
 
@@ -34,6 +34,7 @@ namespace PantryPro.Server.Controllers
         public List<GroceryItem> GetGroceryItem()
         {
             var groceryItemType = _dbContext.GroceryItem.Include("GroceryItemType");
+            Console.WriteLine(groceryItemType);
             return groceryItemType.ToList();
         }
 
@@ -59,7 +60,7 @@ namespace PantryPro.Server.Controllers
             }
 
             var GItem = new GroceryItem
-            {
+            {                
                 Name = gItemPost.Name,
                 Description = gItemPost.Description,
                 Protein = gItemPost.Protein,
@@ -69,7 +70,7 @@ namespace PantryPro.Server.Controllers
                 Weight = gItemPost.Weight,
                 Fat = gItemPost.Fat,
                 ImageUrl = gItemPost.ImageUrl,
-                Quantity = gItemPost.Quantity,
+                Quantity = gItemPost.Quantity,                
             };
 
             _dbContext.GroceryItem.Add(GItem);

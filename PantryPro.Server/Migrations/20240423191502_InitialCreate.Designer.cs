@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using PantryPro.Server.DataBase;
@@ -11,9 +12,11 @@ using PantryPro.Server.DataBase;
 namespace PantryPro.Server.Migrations
 {
     [DbContext(typeof(PantryProAppContext))]
-    partial class PantryProAppContextModelSnapshot : ModelSnapshot
+    [Migration("20240423191502_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

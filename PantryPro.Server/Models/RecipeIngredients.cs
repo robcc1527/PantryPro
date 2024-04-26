@@ -9,6 +9,6 @@ namespace PantryPro.Server.Models
         public int Id { get; set; }
 
         public Recipe Recipe { get; set; } = default!;
-        public Ingredients Ingredients { get; set; }
+        public Ingredients Ingredients { get; set; }= default!;
     }
 }

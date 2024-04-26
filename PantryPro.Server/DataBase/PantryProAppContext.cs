@@ -16,4 +16,5 @@ public class PantryProAppContext : DbContext
     public virtual DbSet<Users> Users { get; set; }
 
     public virtual DbSet<Recipe> Recipe { get; set; }
+    public virtual DbSet<RecipeIngredients> RecipeIngredients { get; set; }
 }
